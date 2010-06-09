@@ -234,6 +234,8 @@
         this._settings = {
             // Location of the server-side upload script
             action: 'upload.php',
+            // http method -  important for rest actions
+            method: 'post',
             // File upload name
             name: 'userfile',
             // Additional data to send
@@ -535,7 +537,7 @@
             // form.setAttribute('method', 'post');
             // form.setAttribute('enctype', 'multipart/form-data');
             // Because in this case file won't be attached to request                    
-            var form = toElement('<form method="post" enctype="multipart/form-data"></form>');
+            var form = toElement('<form method="'+settings.method+'" enctype="multipart/form-data"></form>');
                         
             form.setAttribute('action', settings.action);
             form.setAttribute('target', iframe.name);                                   
