@@ -236,6 +236,8 @@
             action: 'upload.php',
             // File upload name
             name: 'userfile',
+            // Select & upload multiple files at once FF3.6+, Chrome 4+
+            multiple: false,
             // Additional data to send
             data: {},
             // Submit file as soon as it's selected
@@ -353,6 +355,7 @@
             var input = document.createElement("input");
             input.setAttribute('type', 'file');
             input.setAttribute('name', this._settings.name);
+            if(this._settings.multiple) input.setAttribute('multiple', 'multiple');
             
             addStyles(input, {
                 'position' : 'absolute',
