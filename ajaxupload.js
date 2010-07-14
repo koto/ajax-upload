@@ -663,8 +663,8 @@
             }
             
             // sending request    
-            var iframe = this._createIframe();
-            var form = this._createForm(iframe);
+            this.iframe = this._createIframe();
+            var form = this._createForm(this.iframe);
             
             // assuming following structure
             // div -> input type='file'
@@ -681,10 +681,20 @@
             removeNode(this._input); this._input = null;            
             
             // Get response from iframe and fire onComplete event when ready
-            this._getResponse(iframe, file);            
+            this._getResponse(this.iframe, file);
 
             // get ready for next request            
             this._createInput();
+        },
+        /**
+         * Cancels upload by resetting the iframe and pruning it from the DOM
+         */
+        cancel: function() {
+            if (typeof this.iframe === 'object') {
+                this.iframe.src = "javascript:'<html></html>';"
+                removeNode(this.iframe);
+                delete this.iframe;
+            }
         }
     };
 })(); 
