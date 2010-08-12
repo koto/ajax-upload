@@ -56,6 +56,23 @@
                 </script>                
             </p>
             
+            <h2>Test 1b - With select multiple:true</h2>
+            <p>                
+                <a id="test1a" class="button" href="http://valums.com/">Inline "A" element as multiple upload button</a>
+                <script>
+                jQuery(function(){                    
+                    new AjaxUpload('test1a', {
+                        action: 'upload-test.php',
+                        name: 'userfile[]',
+                        multiple: true,
+                        onComplete: function(file, response){                        
+                            alert(response);
+                        }
+                    });
+                });                    
+                </script>                
+            </p>
+            
             <h2>Test 2 - Huge button - Default options - addressing with #test2</h2>
             <div id="test2" class="button" style="background: #AFA8A4; border: 5px solid black; width:100%; height: 500px; margin: 20px 0;">
                 "DIV" element as upload button. Fixed width and height.                

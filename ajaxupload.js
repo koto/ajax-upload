@@ -1,5 +1,5 @@
 /**
- * AJAX Upload ( http://valums.com/ajax-upload/ ) 
+ * @license AJAX Upload ( http://valums.com/ajax-upload/ ) 
  * Copyright (c) Andris Valums
  * Licensed under the MIT license ( http://valums.com/mit-license/ )
  * Thanks to Gary Haran, David Mark, Corey Burns and others for contributions. 
@@ -238,6 +238,8 @@
             method: 'post',
             // File upload name
             name: 'userfile',
+            // Select & upload multiple files at once FF3.6+, Chrome 4+
+            multiple: false,
             // Additional data to send
             data: {},
             // Submit file as soon as it's selected
@@ -355,6 +357,7 @@
             var input = document.createElement("input");
             input.setAttribute('type', 'file');
             input.setAttribute('name', this._settings.name);
+            if(this._settings.multiple) input.setAttribute('multiple', 'multiple');
             
             addStyles(input, {
                 'position' : 'absolute',
@@ -665,8 +668,8 @@
             }
             
             // sending request    
-            var iframe = this._createIframe();
-            var form = this._createForm(iframe);
+            this.iframe = this._createIframe();
+            var form = this._createForm(this.iframe);
             
             // assuming following structure
             // div -> input type='file'
@@ -683,10 +686,20 @@
             removeNode(this._input); this._input = null;            
             
             // Get response from iframe and fire onComplete event when ready
-            this._getResponse(iframe, file);            
+            this._getResponse(this.iframe, file);
 
             // get ready for next request            
             this._createInput();
+        },
+        /**
+         * Cancels upload by resetting the iframe and pruning it from the DOM
+         */
+        cancel: function() {
+            if (typeof this.iframe === 'object') {
+                this.iframe.src = "javascript:'<html></html>';"
+                removeNode(this.iframe);
+                delete this.iframe;
+            }
         }
     };
 })(); 
